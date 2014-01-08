@@ -124,7 +124,7 @@ module Spring
         srand
 
         invoke_after_fork_callbacks
-        shush_backtraces
+        shush_backtraces unless Spring.original_env["SPRING_LOG"]
 
         command.call
       }
