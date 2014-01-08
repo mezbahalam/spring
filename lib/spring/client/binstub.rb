@@ -41,16 +41,9 @@ unless defined?(Spring)
   match = Bundler.default_lockfile.read.match(/^GEM$.*?^    spring \((.*?)\)$.*?^$/m)
   version = match && match[1]
 
-  $stderr.puts Bundler.default_gemfile.inspect
-  $stderr.puts Bundler.root.inspect
-  $stderr.puts Bundler.bundle_path.inspect
-
-  ENV["GEM_HOME"] = ""
   ENV["GEM_PATH"] = ([Bundler.bundle_path.to_s] + Gem.path).join(File::PATH_SEPARATOR)
+  ENV["GEM_HOME"] = ""
   Gem.paths = ENV
-
-  $stderr.puts ENV.map { |k, v| "#{k}=#{v}" }
-  $stderr.puts Gem::Specification.find_all_by_name("spring").inspect
 
   Gem::Specification.find_by_name("spring", version).activate
   require "spring/binstub"
